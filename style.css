@@ -121,8 +121,7 @@ body {
 }
 
 /* Typography */
-.hero-title {
-    font-family: var(--font-serif);
+.hero-title {    font-family: var(--font-serif);
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: var(--font-weight-medium);
     line-height: var(--leading-heading);
