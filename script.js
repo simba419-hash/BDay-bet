@@ -81,20 +81,19 @@ function tryPlayMusic() {
 // Attempt to play on page load
 tryPlayMusic();
 
-// Fallback: start music on the first user interaction if autoplay was blocked.
-// Browsers block audio autoplay until the user interacts, so we listen for
-// any interaction (click, tap, key press, scroll) to unlock playback.
+// Fallback: start music on the first real user interaction if autoplay was
+// blocked. Browsers block audio autoplay until the user interacts, so we
+// listen for click/tap/key (NOT scroll, which fires immediately on load and
+// would remove the fallback before the user ever interacts).
 const startMusicOnInteraction = () => {
     tryPlayMusic();
     window.removeEventListener('click', startMusicOnInteraction);
     window.removeEventListener('keydown', startMusicOnInteraction);
     window.removeEventListener('touchstart', startMusicOnInteraction);
-    window.removeEventListener('scroll', startMusicOnInteraction);
 };
 window.addEventListener('click', startMusicOnInteraction);
 window.addEventListener('keydown', startMusicOnInteraction);
 window.addEventListener('touchstart', startMusicOnInteraction);
-window.addEventListener('scroll', startMusicOnInteraction);
 
 // 3. Lightbox Close Handler
 if (closeLightbox && lightbox) {
