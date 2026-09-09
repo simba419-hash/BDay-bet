@@ -1,5 +1,6 @@
 const photoGrid = document.getElementById('photoGrid');
 const audio = document.getElementById('birthdayAudio');
+const musicBtn = document.getElementById('musicToggle');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const closeLightbox = document.querySelector('.close-lightbox');
@@ -71,11 +72,34 @@ if (photoGrid) {
     });
 }
 
-// 2. Background Music Autoplay
+// 2. Music Button Handler + Autoplay
+function updateMusicBtn() {
+    if (musicBtn) {
+        musicBtn.textContent = audio && !audio.paused ? "⏸ Pause Music" : "🎵 Play Music";
+    }
+}
+
 function tryPlayMusic() {
     if (audio && audio.paused) {
-        audio.play().catch(() => {});
+        audio.play()
+            .then(updateMusicBtn)
+            .catch(() => {});
     }
+}
+
+// Play/pause toggle button
+if (musicBtn && audio) {
+    musicBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            tryPlayMusic();
+        } else {
+            audio.pause();
+            updateMusicBtn();
+        }
+    });
+
+    audio.addEventListener('play', updateMusicBtn);
+    audio.addEventListener('pause', updateMusicBtn);
 }
 
 // Attempt to play on page load
